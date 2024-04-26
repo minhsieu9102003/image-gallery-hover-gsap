@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="base.css">
+</head>
+
+<body>
+    <div class="mask">
+
+    </div>
+    <div class="img-container">
+        <img class='img-change' src="./img1.png" alt="">
+    </div>
+
+    <div class="interact-img">
+        <div class="fashion-container">
+            <h1 class="FA">FA</h1>
+            <h1 class="SH">SH</h1>
+            <h1 class="ION">ION</h1>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+                <path class='path' d="M3.41 2H16V0H1a1 1 0 0 0-1 1v16h2V3.41l28.29 28.3 1.41-1.41z"
+                    data-name="7-Arrow Up" />
+            </svg>
+        </div>
+        <img class='interact-main' src="./img7.png" alt="">
+
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+
+    <script>
+        const interactImg = document.querySelector('.interact-img')
+        const imgContainer = document.querySelector('.img-container')
+        const interactImgMain = document.querySelector('.interact-main')
+        const fashion = document.querySelectorAll('h1')
+        const mask = document.querySelector('.mask')
+        const path = document.querySelector('.path')
+
+
+        const images = ["./img1.png", "./img2.png", "./img3.png", "./img4.png", "./img5.png", "./img6.png", "./img7.png", "./img8.png"];
+        let currentIndex = 0;
+
+
+        function changeImage() {
+            const imgElement = document.querySelector('.img-change');
+
+            setTimeout(() => {
+                currentIndex = (currentIndex + 1) % images.length;
+                imgElement.src = images[currentIndex];
+                imgElement.alt = `Image ${currentIndex + 1}`;
+
+            }, 500);
+        }
+
+        setInterval(changeImage, 200);
+
+
+        window.addEventListener('mousemove', e => {
+            const { clientX, clientY } = e
+            const x = Math.round(clientX / window.innerWidth * 100)
+            const y = Math.round(clientY / window.innerHeight * 100)
+            gsap.to(mask, {
+                x: `${clientX}`,
+                y: `${clientY}`,
+                ease: 'sine.out',
+                duration: .5
+            })
+            gsap.to(imgContainer, {
+                x: `${clientX}`,
+                y: `${clientY}`,
+                ease: 'sine.out',
+                duration: .5
+            })
+        })
+        const cursorTL = gsap.timeline({ default: { ease: 'power4.out', duration: .1 } })
+        cursorTL.to(mask, {
+            height: '1.5rem',
+            width: '1.5rem',
+            outline: '5px solid white',
+            outlineOffset: '5px',
+            duration: .2
+        })
+        const sliderTL = gsap.timeline({ default: { ease: 'power4.out', duration: .1 } })
+        sliderTL.to(imgContainer, {
+            opacity: 1,
+            clipPath: ' polygon(0 0, 100% 0, 100% 100%, 0 100%)',
+            duration: .2
+        })
+        const fashionTL = gsap.timeline({ default: { ease: 'power4.out', duration: .5 } })
+        fashionTL
+            .to(fashion, {
+                stagger: .1,
+                duration: .5,
+                ease: 'power4.inOut',
+                transform: 'translateY(0)',
+                opacity: 1,
+
+            })
+            .to(path, {
+                strokeDashoffset: 0,
+                fill: 'white',
+                duration: 1,
+                ease: 'power4.inOut',
+                opacity: 1,
+
+            }, '-=.5')
+
+        fashionTL.pause()
+        cursorTL.pause()
+        sliderTL.pause()
+
+        interactImg.addEventListener('mousemove', () => {
+            cursorTL.play()
+            fashionTL.play()
+            sliderTL.play()
+
+        })
+        interactImg.addEventListener('mouseleave', () => {
+            cursorTL.reverse()
+            fashionTL.reverse()
+            sliderTL.reverse()
+
+        })
+        const tl = gsap.timeline({ default: { ease: 'power4.out', duration: .3 } })
+
+        tl.to(interactImgMain, {
+            transform: 'scale(1.2)',
+            filter: 'grayscale(.9)'
+        })
+        tl.pause()
+        interactImgMain.addEventListener('mouseenter', () => {
+            tl.play()
+            document.body.style.backgroundColor = 'black'
+            document.body.style.transition = 'all 1s ease-in-out'
+        })
+        interactImgMain.addEventListener('mouseleave', () => {
+            tl.reverse()
+            document.body.style.backgroundColor = 'white'
+        })
+
+
+    </script>
+</body>
+
+</html>

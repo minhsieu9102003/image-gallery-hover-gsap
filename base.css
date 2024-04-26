@@ -1,0 +1,103 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+
+}
+
+body {
+    overflow: hidden;
+}
+
+.img-container {
+    background-color: rgb(211, 211, 211);
+    padding: 2rem 0;
+    height: 20rem;
+    width: 15rem;
+    overflow: hidden;
+    position: absolute;
+    left: 15%;
+    top: 20%;
+    transform: translate(-50%, -50%);
+    z-index: 100000;
+    clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+    transform-origin: top;
+    opacity: 0;
+    user-select: none;
+    pointer-events: none;
+
+}
+
+svg {
+    position: absolute;
+    bottom: 8%;
+    left: 120%;
+    height: 2.5rem;
+    width: 2.5rem;
+    fill: white;
+    transform: rotate(90deg);
+
+    z-index: 1000000;
+}
+
+.interact-img {
+
+    height: 30rem;
+    width: 20rem;
+    overflow: hidden;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+}
+
+
+
+
+
+img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+
+}
+
+.mask {
+    height: 0rem;
+    width: 0rem;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: white;
+    z-index: 2;
+    border-radius: 50%;
+    user-select: none;
+    pointer-events: none;
+}
+
+.fashion-container {
+    position: absolute;
+    color: white;
+    bottom: 5%;
+    left: 5%;
+    z-index: 1000;
+    font-size: 2rem;
+
+}
+
+h1 {
+    opacity: 0;
+    transform: translateY(100px);
+}
+
+
+.path {
+    stroke: white;
+    stroke-width: 1px;
+    fill: none;
+    stroke-dasharray: 150;
+    stroke-dashoffset: 100;
+    opacity: 0;
+
+}
